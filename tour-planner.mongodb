@@ -1,0 +1,66 @@
+use tours
+db.roles.drop() 
+
+db.roles.insertMany([
+{
+	name: 'Administrator', 
+	description: 'Administrator role is able to create, edit and delete.',
+	routesPermissions: [
+	{
+		route: '/api/users/',
+		methods: ['get']
+	},
+	{
+		route: '/api/activities/', 
+		methods: ['get','post', 'put', 'delete'] 
+	},
+	{
+		route: '/api/s3/',
+		methods: ['get']
+	}
+	],
+	menus: [
+	{
+		label: 'Manage Activities', 
+		link: '/main/activities' 
+	}
+	],
+	createdAt: new Date(),
+	updatedAt: new Date()
+},
+{
+	name: 'Tourist', 
+	description: 'Tourist role can only can only manage tours',
+	routesPermissions: [
+	{
+		route: '/api/users/',
+		methods: ['get']
+	},
+	{
+		route: '/api/tours',
+		methods: ['get','post', 'put', 'delete']
+	},
+	{
+		route: '/api/tourActivities/',
+		methods: ['get','post', 'put', 'delete'] 
+	}
+	],
+	menus: [
+	{
+		label: 'Manage Tours',
+		link: '/main/tours'
+	}
+	],
+	createdAt: new Date(),
+	updatedAt: new Date()
+}
+]);
+
+db.users.updateOne({'email': 'davidromeropro@gmail.com'}, {$unset :{'roles': 1}})
+// db.roles.updateOne({'name': 'User'}, {$set :{'name': 'Tourist'}})
+
+db.users.updateOne({'email': 'davidromeropro@gmail.com'}, {$push :{'roles': ObjectId('629e882e1e6844d150b6b06e')}})
+db.users.updateOne({'email': 'davidromeropro@gmail.com'}, {$push :{'roles': ObjectId('629e882e1e6844d150b6b06f')}})
+
+db.users.find({'email': 'davidromeropro@gmail.com'})
+db.roles.find()
