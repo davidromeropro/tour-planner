@@ -163,7 +163,7 @@ export const TourActivities = () => {
 	}
 
 	const handleDelete = (activity: any) => {
-		const newTourActivities = tourActivities.filter((tourActivity: any) => tourActivity._id !== activity._id && tourActivity.startTime.getTime() !== activity.startTime.getTime() && tourActivity.endTime.getTime() !== activity.endTime.getTime());
+		const newTourActivities = tourActivities.filter((tourActivity: any) => tourActivity.startTime.getTime() !== activity.startTime.getTime());
 		setTourActivities(newTourActivities);
 	}
 
@@ -360,8 +360,8 @@ export const TourActivities = () => {
 										const startTime = new Date(parseInt(data[0]));
 										const endTime = new Date(parseInt(data[1]));
 										// Update Start Time and End Time
-										setFilteredData([...activities.slice(0, index), { ...activity, startTime, endTime }, ...activities.slice(index + 1)]);
-										console.log('activities', activities);
+										setActivities([...activities.slice(0, index), { ...activity, startTime, endTime }, ...activities.slice(index + 1)]);
+										setFilteredData([...filteredData.slice(0, index), { ...activity, startTime, endTime }, ...filteredData.slice(index + 1)]);
 									}}
 									data={activity.activityAvailabilities}
 								/>
